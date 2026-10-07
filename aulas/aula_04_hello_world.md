@@ -47,7 +47,7 @@ Caso não esteja dentro dessa pasta basta digitar
 '''(venv) PS C:\projetocombanco> cd backend'''
 
 ```python
-from fastapi import FastAPI  # importa o FastAPI
+from fastapi import FastAPI'  # importa o FastAPI
 
 app = FastAPI()              # cria a aplicação
 
@@ -58,6 +58,8 @@ def inicio():                # quando alguém acessar "/", essa função vai rod
 ```
 
 ### O que cada parte faz
+
+
 
 | Parte | O que é |
 |-------|---------|
