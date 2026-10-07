@@ -1,6 +1,9 @@
-from fastapi import FastAPI  # importa o FastAPI
+from fastapi import FastAPI
+from rotas import clientes
 
 app = FastAPI()
+
+app.include_router(clientes.router) 
 
 
 @app.get("/")
