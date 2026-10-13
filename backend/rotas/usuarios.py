@@ -1,9 +1,3 @@
-# ============================================================
-# rotas/usuarios.py — Cadastro de Usuários
-# Descrição: Endpoint para cadastrar novos usuários do sistema,
-#            guardando a senha como hash (nunca em texto puro).
-# ============================================================
-
 from fastapi import APIRouter
 from pydantic import BaseModel
 from database import conectar

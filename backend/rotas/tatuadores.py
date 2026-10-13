@@ -14,6 +14,8 @@ class Tatuador(BaseModel):
     telefone: Optional[str] = None         # opcional
     datacontratacao: Optional[str] = None  # opcional
     idsenioridade: int                     # obrigatório — aponta para a tabela senioridade
+
+class EstilosDoTatuador(BaseModel):
     idestilos: List[int]
 
 
