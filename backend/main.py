@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends
-from seguranca import verificar_token
+from seguranca import verificar_token, verificar_admin
 from fastapi.staticfiles import StaticFiles   # ← novo: serve arquivos estáticos (as imagens enviadas)
 from fastapi.middleware.cors import CORSMiddleware
 from rotas import clientes, senioridade, tatuadores, agendamentos, estilos, usuarios, login
@@ -18,7 +18,7 @@ os.makedirs("uploads", exist_ok=True)   # garante que a pasta existe antes de te
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")   # ← serve as imagens
 
 app.include_router(login.router, tags=["Login"])
-app.include_router(usuarios.router, prefix="/usuarios", tags=["Usuários"])
+app.include_router(usuarios.router, prefix="/usuarios", tags=["Usuários"], dependencies=[Depends(verificar_admin)])
 app.include_router(clientes.router, prefix="/clientes", tags=["Clientes"], dependencies=[Depends(verificar_token)])
 app.include_router(senioridade.router, prefix="/senioridade", tags=["Senioridade"], dependencies=[Depends(verificar_token)])
 app.include_router(estilos.router, prefix="/estilos", tags=["Estilos"], dependencies=[Depends(verificar_token)])

@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --vinho:           #6D012B;   /* cor principal */
+  --vinho-claro:     #A00140;   /* para hover / destaques */
+  --vinho-escuro:    #4A001D;   /* gradientes profundos */
+  --vinho-glow:      rgba(109, 1, 43, 0.45);
+  --preto:           #0a0a0a;
+  --preto-2:         #121212;
+  --preto-3:         #1a1a1a;
+  --borda:           #2a2a2a;
+  --texto:           #e5e5e5;
+  --texto-muted:     #9ca3af;
+}
+
+/* ─── BASE ─────────────────────────────────────── */
+body {
+  background-color: var(--preto);
+  background-image:
+    radial-gradient(circle at 10% 0%,  rgba(109, 1, 43, 0.14), transparent 45%),
+    radial-gradient(circle at 90% 100%, rgba(109, 1, 43, 0.10), transparent 45%);
+  background-attachment: fixed;
+  color: var(--texto);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, .navbar-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1.5px;
+}
+
+h1 {
+  color: #fff;
+  border-left: 4px solid var(--vinho-claro);
+  padding-left: 14px;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── NAVBAR ───────────────────────────────────── */
+.navbar {
+  background-color: rgba(10, 10, 10, 0.95) !important;
+  border-bottom: 2px solid var(--vinho);
+  box-shadow: 0 4px 20px rgba(109, 1, 43, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.navbar-brand {
+  font-size: 1.6rem;
+  color: #fff !important;
+}
+.navbar-brand::before {
+  content: "◆ ";
+  color: var(--vinho-claro);
+}
+
+.navbar a.text-light {
+  color: var(--texto-muted) !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 6px 4px;
+  position: relative;
+  transition: color .25s ease;
+}
+.navbar a.text-light::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: var(--vinho-claro);
+  transition: width .3s ease;
+}
+.navbar a.text-light:hover { color: #fff !important; }
+.navbar a.text-light:hover::after { width: 100%; }
+
+/* ─── BOTÕES ───────────────────────────────────── */
+.btn {
+  font-weight: 600;
+  letter-spacing: .5px;
+  border-radius: 6px;
+  border: none;
+  transition: all .25s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--vinho), var(--vinho-escuro));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(109, 1, 43, 0.35);
+}
+.btn-primary:hover, .btn-primary:focus {
+  background: linear-gradient(135deg, var(--vinho-claro), var(--vinho));
+  box-shadow: 0 6px 22px var(--vinho-glow);
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #16a34a, #065f46);
+  color: #fff;
+}
+.btn-success:hover {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #f59e0b, #b45309);
+  color: #fff;
+}
+.btn-warning:hover {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #fff;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--vinho), var(--vinho-escuro));
+  color: #fff;
+}
+.btn-danger:hover {
+  background: linear-gradient(135deg, var(--vinho-claro), var(--vinho));
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #262626;
+  color: var(--texto);
+}
+.btn-secondary:hover { background: #333; color: #fff; }
+
+.btn-outline-light {
+  border: 1.5px solid var(--vinho-claro);
+  color: #fff;
+  background: transparent;
+}
+.btn-outline-light:hover {
+  background: var(--vinho);
+  border-color: var(--vinho);
+  color: #fff;
+}
+
+/* ─── FORMULÁRIOS ──────────────────────────────── */
+.form-control,
+.form-select {
+  background-color: var(--preto-3);
+  border: 1.5px solid var(--borda);
+  color: var(--texto);
+  border-radius: 6px;
+  padding: 10px 14px;
+  transition: all .25s ease;
+}
+.form-control::placeholder { color: #6b7280; }
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--preto-3);
+  border-color: var(--vinho-claro);
+  box-shadow: 0 0 0 3px var(--vinho-glow);
+  color: var(--texto);
+}
+.form-select option { background: var(--preto-3); }
+
+/* ─── INPUT FILE (correção do botão branco) ────── */
+input[type="file"].form-control {
+  padding: 6px 10px;
+  color: var(--texto-muted);
+  cursor: pointer;
+}
+
+/* Firefox / Chrome / Edge / Safari modernos */
+input[type="file"].form-control::file-selector-button {
+  background: linear-gradient(135deg, var(--vinho), var(--vinho-escuro));
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  margin-right: 12px;
+  font-weight: 600;
+  font-size: .9rem;
+  letter-spacing: .3px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+input[type="file"].form-control::file-selector-button:hover {
+  background: linear-gradient(135deg, var(--vinho-claro), var(--vinho));
+}
+
+/* Navegadores antigos baseados em WebKit (fallback) */
+input[type="file"].form-control::-webkit-file-upload-button {
+  background: linear-gradient(135deg, var(--vinho), var(--vinho-escuro));
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  margin-right: 12px;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+}
+input[type="file"].form-control::-webkit-file-upload-button:hover {
+  background: linear-gradient(135deg, var(--vinho-claro), var(--vinho));
+}
+
+/* ─── TABELAS ──────────────────────────────────── */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--texto);
+  --bs-table-border-color: var(--borda);
+  --bs-table-hover-bg: rgba(109, 1, 43, 0.10);
+  --bs-table-hover-color: #fff;
+  color: var(--texto);
+  background: var(--preto-2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.table thead th {
+  background: linear-gradient(180deg, #1f1f1f, #171717);
+  color: var(--vinho-claro);
+  text-transform: uppercase;
+  font-size: .8rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+  border-color: var(--borda);
+}
+.table tbody td {
+  border-color: var(--borda);
+  vertical-align: middle;
+}
+
+/* ─── CARD DE AUTENTICAÇÃO ─────────────────────── */
+.auth-card {
+  background: var(--preto-2);
+  border: 1px solid var(--borda);
+  border-top: 3px solid var(--vinho-claro);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+}
+
+/* ─── HERO (index) ─────────────────────────────── */
+.hero {
+  min-height: calc(100vh - 75px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: #fff;
+  border: none;
+  padding: 0;
+  letter-spacing: 3px;
+  line-height: 1.05;
+  text-shadow: 0 4px 30px rgba(109, 1, 43, .55);
+}
+.hero h1 span { color: var(--vinho-claro); }
+.hero p {
+  color: var(--texto-muted);
+  max-width: 640px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-top: 1.5rem;
+}
+.hero .btn-lg {
+  padding: 14px 42px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 1rem;
+}
+
+/* ─── CARDS DO DASHBOARD ───────────────────────── */
+.dash-card {
+  display: block;
+  padding: 2rem 1rem;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+  border: 1px solid var(--borda);
+  transition: all .3s ease;
+}
+.dash-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--vinho-claro);
+  background: linear-gradient(145deg, #25020f, #130007);
+  box-shadow: 0 10px 30px rgba(109, 1, 43, .35);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ─── LINKS ────────────────────────────────────── */
+a { color: var(--vinho-claro); text-decoration: none; }
+a:hover { color: var(--vinho); text-decoration: underline; }
