@@ -1,4 +1,6 @@
 const API = 'http://127.0.0.1:8000'
+protegerPagina() 
+
 const formEstilo = document.getElementById('form-estilo')
 const botaoSubmit = document.getElementById('btn-submit-estilo')
 
@@ -11,7 +13,7 @@ function limparFormulario() {
 }
 
 async function listarEstilos() {
-  const resposta = await fetch(`${API}/estilos`)
+  const resposta = await fetchAutenticado(`${API}/estilos`)
   const estilos = await resposta.json()
 
   const corpo = document.getElementById('corpo-tabela')

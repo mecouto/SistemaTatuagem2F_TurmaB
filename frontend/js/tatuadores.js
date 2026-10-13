@@ -1,4 +1,5 @@
 const API = 'http://127.0.0.1:8000'
+protegerPagina() 
 
 // elementos do formulário e do botão de enviar
 const formTatuador = document.getElementById('form-tatuador')
@@ -15,7 +16,7 @@ function limparFormulario() {
 
 // ─── Busca as senioridades na API e preenche o <select> ───
 async function carregarSenioridades() {
-  const resposta = await fetch(`${API}/senioridade`)
+  const resposta = await fetchAutenticado(`${API}/senioridade`)
   const senioridades = await resposta.json()
 
   const select = document.getElementById('idsenioridade')
@@ -30,7 +31,7 @@ carregarSenioridades()
 
 // ─── Carrega a lista de tatuadores ao abrir a página ───
 async function listarTatuadores() {
-  const resposta = await fetch(`${API}/tatuadores`)
+  const resposta = await fetchAutenticado(`${API}/tatuadores`)
   const tatuadores = await resposta.json()
 
   const corpo = document.getElementById('corpo-tabela')

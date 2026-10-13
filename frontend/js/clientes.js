@@ -1,8 +1,8 @@
 const API = 'http://127.0.0.1:8000'  // endereço da nossa API
+protegerPagina() 
+
 const formCliente = document.getElementById('form-cliente')
 const botaoSubmit = document.getElementById('btn-submit-cliente')
-
-protegerPagina() 
 
 function limparFormulario() {
   formCliente.reset()
@@ -13,7 +13,7 @@ function limparFormulario() {
 }
 
 async function listarClientes() {
-  const resposta = await fetch(`${API}/clientes`)
+  const resposta = await fetchAutenticado(`${API}/clientes`)
   const clientes = await resposta.json()
 
   const corpo = document.getElementById('corpo-tabela')

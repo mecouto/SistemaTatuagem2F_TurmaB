@@ -1,5 +1,6 @@
 // endereço da nossa API backend
 const API = 'http://127.0.0.1:8000'
+protegerPagina() 
 
 // elementos do formulário e do botão de enviar
 const formSenioridade = document.getElementById('form-senioridade')
@@ -16,7 +17,7 @@ function limparFormulario() {
 
 // ─── Carrega a lista de senioridades ao abrir a página ───
 async function listarSenioridades() {
-  const resposta = await fetch(`${API}/senioridade`)
+  const resposta = await fetchAutenticado(`${API}/senioridade`)
   const senioridades = await resposta.json()
 
   const corpo = document.getElementById('corpo-tabela')
