@@ -1,9 +1,3 @@
-# ============================================================
-# rotas/senioridade.py — CRUD de Senioridade
-# Descrição: Endpoints para gerenciar os níveis de senioridade
-#            dos tatuadores (Júnior, Pleno, Sênior).
-# ============================================================
-
 from fastapi import APIRouter      # organiza rotas em grupos
 from pydantic import BaseModel     # valida os dados que chegam na API
 from database import conectar      # nossa função de conexão
@@ -15,7 +9,7 @@ class Senioridade(BaseModel):
     nome: str    # obrigatório — ex: "Júnior", "Pleno", "Sênior"
 
 # GET /senioridade — lista todas as senioridades
-@router.get("/senioridade")
+@router.get("")
 def listar_senioridade():
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -25,7 +19,7 @@ def listar_senioridade():
     return senioridades
 
 # GET /senioridade/{id} — busca uma senioridade pelo ID
-@router.get("/senioridade/{id}")
+@router.get("/{id}")
 def buscar_senioridade(id: int):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -37,7 +31,7 @@ def buscar_senioridade(id: int):
     return senioridade
 
 # POST /senioridade — cadastra uma nova senioridade
-@router.post("/senioridade")
+@router.post("")
 def criar_senioridade(senioridade: Senioridade):
     conn = conectar()
     cursor = conn.cursor()
@@ -47,7 +41,7 @@ def criar_senioridade(senioridade: Senioridade):
     return {"mensagem": "Senioridade cadastrada com sucesso"}
 
 # PUT /senioridade/{id} — atualiza uma senioridade existente
-@router.put("/senioridade/{id}")
+@router.put("/{id}")
 def atualizar_senioridade(id: int, senioridade: Senioridade):
     conn = conectar()
     cursor = conn.cursor()
@@ -57,7 +51,7 @@ def atualizar_senioridade(id: int, senioridade: Senioridade):
     return {"mensagem": "Senioridade atualizada com sucesso"}
 
 # DELETE /senioridade/{id} — deleta uma senioridade
-@router.delete("/senioridade/{id}")
+@router.delete("/{id}")
 def deletar_senioridade(id: int):
     conn = conectar()
     cursor = conn.cursor()

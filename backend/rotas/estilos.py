@@ -9,7 +9,7 @@ class Estilo(BaseModel):
     descricao: str    # obrigatório — ex: "Blackwork", "Aquarela"
 
 # GET /estilos — lista todos os estilos
-@router.get("/estilos")
+@router.get("")
 def listar_estilos():
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -19,7 +19,7 @@ def listar_estilos():
     return estilos
 
 # GET /estilos/{id} — busca um estilo pelo ID
-@router.get("/estilos/{id}")
+@router.get("/{id}")
 def buscar_estilo(id: int):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -31,7 +31,7 @@ def buscar_estilo(id: int):
     return estilo
 
 # POST /estilos — cadastra um novo estilo
-@router.post("/estilos")
+@router.post("")
 def criar_estilo(estilo: Estilo):
     conn = conectar()
     cursor = conn.cursor()
@@ -40,7 +40,7 @@ def criar_estilo(estilo: Estilo):
     conn.close()
     return {"mensagem": "Estilo cadastrado com sucesso"}
 
-@router.put("/estilos/{id}")
+@router.put("/{id}")
 def atualizar_estilo(id: int, estilo: Estilo):
     conn = conectar()
     cursor = conn.cursor()
@@ -50,7 +50,7 @@ def atualizar_estilo(id: int, estilo: Estilo):
     return {"mensagem": "Estilo atualizado com sucesso"}
 
 # DELETE /estilos/{id} — deleta um estilo
-@router.delete("/estilos/{id}")
+@router.delete("/{id}")
 def deletar_estilo(id: int):
     conn = conectar()
     cursor = conn.cursor()
