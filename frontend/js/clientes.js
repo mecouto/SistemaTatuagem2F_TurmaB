@@ -2,6 +2,8 @@ const API = 'http://127.0.0.1:8000'  // endereço da nossa API
 const formCliente = document.getElementById('form-cliente')
 const botaoSubmit = document.getElementById('btn-submit-cliente')
 
+protegerPagina() 
+
 function limparFormulario() {
   formCliente.reset()
   delete formCliente.dataset.idCliente
