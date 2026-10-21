@@ -17,10 +17,11 @@ formLogin.addEventListener('submit', async (e) => {
 
   const resultado = await resposta.json()
 
-  if (resposta.ok) {
-    localStorage.setItem('token', resultado.access_token)   // guarda o token na "gaveta"
+
+  if (resultado.access_token) {
+    localStorage.setItem('token', resultado.access_token)
     window.location.href = 'dashboard.html'
   } else {
-    alert('Erro ao entrar: ' + resultado.erro)
+    alert('Erro ao entrar: ' + (resultado.detail || resultado.erro || 'Erro desconhecido'))
   }
 })

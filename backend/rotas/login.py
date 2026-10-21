@@ -1,17 +1,19 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from datetime import datetime, timedelta, timezone
 from database import conectar
+from dotenv import load_dotenv
 import bcrypt
 import jwt
 import os
 
+load_dotenv()   # garante SECRET_KEY carregada mesmo se este módulo for importado antes de database.py
+
 router = APIRouter()
 
-SECRET_KEY = os.getenv("SECRET_KEY")   # a chave que assina os tokens, vinda do .env
-ALGORITMO = "HS256"                    # o "tipo de selo" usado pra assinar
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITMO = "HS256"
 
-# Modelo de dados — o que o formulário de login precisa mandar
 class Login(BaseModel):
     email: str
     senha: str
@@ -24,28 +26,22 @@ def login(dados: Login):
     cursor.execute("SELECT * FROM usuario WHERE email = %s", (dados.email,))
     usuario = cursor.fetchone()
     conn.close()
-
-    # se o e-mail não existir, nem vale a pena conferir senha nenhuma
+    
     if not usuario:
-        return {"erro": "E-mail ou senha inválidos"}
+        raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")
 
-    # confere a senha digitada com o hash guardado no banco (mesma lógica do "triturador" da Aula 12)
     senha_confere = bcrypt.checkpw(dados.senha.encode("utf-8"), usuario["senha"].encode("utf-8"))
 
     if not senha_confere:
-        return {"erro": "E-mail ou senha inválidos"}
-        # repare que a mensagem é igual, tanto pra "e-mail não existe" quanto pra "senha errada" —
-        # de propósito, pra não dar pista de qual das duas coisas a pessoa errou
+        raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")
 
-    # monta o "conteúdo" do crachá: quem é, qual o tipo de acesso, e até quando vale
     expira_em = datetime.now(timezone.utc) + timedelta(hours=2)
     payload = {
-        "sub": usuario["email"],   # "sub" = subject, o dono desse token
+        "sub": usuario["email"],
         "tipo": usuario["tipo"],
-        "exp": expira_em           # depois desse horário, o token para de valer
+        "exp": expira_em
     }
 
-    # gera o token, assinado com a nossa chave secreta
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITMO)
 
     return {"access_token": token, "token_type": "bearer"}
