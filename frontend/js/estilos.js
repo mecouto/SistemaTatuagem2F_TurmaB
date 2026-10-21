@@ -1,3 +1,4 @@
+
 const API = 'http://127.0.0.1:8000'
 protegerPagina() 
 
@@ -95,7 +96,7 @@ async function deletarEstilo(id) {
 
 // ─── Busca os estilos na API e monta os checkboxes ───
 async function carregarEstilos() {
-  const resposta = await fetch(`${API}/estilos`)
+  const resposta = await fetchAutenticado(`${API}/estilos`)
   const estilos = await resposta.json()
 
   const lista = document.getElementById('lista-estilos')

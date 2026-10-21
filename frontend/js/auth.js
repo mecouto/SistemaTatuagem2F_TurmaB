@@ -16,8 +16,7 @@ async function fetchAutenticado(url, opcoes = {}) {
 
   const resposta = await fetch(url, opcoes)
 
-  if (resposta.status === 401) {
-    // o token não é mais válido (expirou, ou foi removido) — manda de volta pro login
+  if (resposta.status === 401 || resposta.status === 403) {
     localStorage.removeItem('token')
     window.location.href = 'login.html'
   }

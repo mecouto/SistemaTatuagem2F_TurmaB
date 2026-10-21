@@ -53,13 +53,13 @@ formCliente.addEventListener('submit', async (e) => {
   const idCliente = formCliente.dataset.idCliente
 
   if (idCliente) {
-    await fetch(`${API}/clientes/${idCliente}`, {
+    await fetchAutenticado(`${API}/clientes/${idCliente}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(cliente)
     })
   } else {
-    await fetch(`${API}/clientes`, {
+    await fetchAutenticado(`${API}/clientes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(cliente)

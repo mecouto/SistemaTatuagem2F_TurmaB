@@ -17,7 +17,6 @@ formLogin.addEventListener('submit', async (e) => {
 
   const resultado = await resposta.json()
 
-
   if (resultado.access_token) {
     localStorage.setItem('token', resultado.access_token)
     window.location.href = 'dashboard.html'

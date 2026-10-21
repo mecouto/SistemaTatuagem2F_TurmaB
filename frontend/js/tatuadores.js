@@ -117,7 +117,7 @@ async function preencherFormularioEdicao(tatuador) {
   // desmarca todos os checkboxes antes de marcar os certos
   document.querySelectorAll('#lista-estilos input').forEach(cb => cb.checked = false)
 
-  const resposta = await fetch(`${API}/tatuadores/${tatuador.idtatuador}/estilos`)
+  const resposta = await fetchAutenticado(`${API}/tatuadores/${tatuador.idtatuador}/estilos`)
   const estilosDoTatuador = await resposta.json()
   estilosDoTatuador.forEach(e => {
     const checkbox = document.getElementById(`estilo-${e.idestilo}`)
@@ -132,7 +132,7 @@ async function preencherFormularioEdicao(tatuador) {
 
 // ─── Busca os estilos na API e monta os checkboxes ───
 async function carregarEstilos() {
-  const resposta = await fetch(`${API}/estilos`)
+  const resposta = await fetchAutenticado(`${API}/estilos`)
   const estilos = await resposta.json()
 
   const lista = document.getElementById('lista-estilos')

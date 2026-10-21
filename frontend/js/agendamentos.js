@@ -31,7 +31,7 @@ async function carregarClientes() {
 
 // ─── Busca os tatuadores na API e preenche o <select> ───
 async function carregarTatuadores() {
-  const resposta = await fetch(`${API}/tatuadores`)
+  const resposta = await fetchAutenticado(`${API}/tatuadores`)
   const tatuadores = await resposta.json()
 
   const select = document.getElementById('idtatuador')
@@ -47,7 +47,7 @@ carregarTatuadores()
 
 // ─── Carrega a lista de agendamentos ao abrir a página ───
 async function listarAgendamentos() {
-  const resposta = await fetch(`${API}/agendamentos`)
+  const resposta = await fetchAutenticado(`${API}/agendamentos`)
   const agendamentos = await resposta.json()
 
   const corpo = document.getElementById('corpo-tabela')
@@ -99,13 +99,13 @@ formAgendamento.addEventListener('submit', async (e) => {
   let idParaUpload = idAgendamento   // qual id vamos usar pra anexar a imagem, se houver uma
 
   if (idAgendamento) {
-    await fetch(`${API}/agendamentos/${idAgendamento}`, {
+    await fetchAutenticado(`${API}/agendamentos/${idAgendamento}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(agendamento)
     })
   } else {
-    const resposta = await fetch(`${API}/agendamentos`, {
+    const resposta = await fetchAutenticado(`${API}/agendamentos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(agendamento)

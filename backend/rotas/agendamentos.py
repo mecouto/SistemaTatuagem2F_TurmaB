@@ -89,6 +89,7 @@ def atualizar_agendamento(id: int, agendamento: Agendamento):
     conn.close()
     return {"mensagem": "Agendamento atualizado com sucesso"}
 
+@router.delete("/{id}")
 def deletar_agendamento(id: int):
     conn = conectar()
     cursor = conn.cursor()
