@@ -5,6 +5,7 @@ protegerPagina()
 // elementos do formulário e do botão de enviar
 const formSenioridade = document.getElementById('form-senioridade')
 const botaoSubmit = document.getElementById('btn-submit-senioridade')
+let senioridades = []
 
 // limpa o formulário e devolve o botão para o modo de cadastro
 function limparFormulario() {
@@ -18,7 +19,10 @@ function limparFormulario() {
 // ─── Carrega a lista de senioridades ao abrir a página ───
 async function listarSenioridades() {
   const resposta = await fetchAutenticado(`${API}/senioridade`)
-  const senioridades = await resposta.json()
+  if (!resposta.ok) {
+    throw new Error('Não foi possível carregar as senioridades.')
+  }
+  senioridades = await resposta.json()
 
   const corpo = document.getElementById('corpo-tabela')
   corpo.innerHTML = ''
@@ -29,14 +33,14 @@ async function listarSenioridades() {
         <td>${s.idsenioridade}</td>
         <td>${s.nome}</td>
         <td>
-          <button class="btn btn-sm btn-warning me-2" onclick='preencherFormularioEdicao(${JSON.stringify(s)})'>Editar</button>
+          <button class="btn btn-sm btn-warning me-2" onclick="preencherFormularioEdicao(${s.idsenioridade})">Editar</button>
           <button class="btn btn-sm btn-danger" onclick="deletarSenioridade(${s.idsenioridade})">Excluir</button>
         </td>
       </tr>`
   })
 }
 
-listarSenioridades()
+listarSenioridades().catch(erro => alert(`Erro ao carregar senioridades: ${erro.message}`))
 
 // ─── Cadastrar e atualizar senioridades ───
 formSenioridade.addEventListener('submit', async (e) => {
@@ -45,26 +49,32 @@ formSenioridade.addEventListener('submit', async (e) => {
   const senioridade = { nome: document.getElementById('nome').value }
   const idSenioridade = formSenioridade.dataset.idSenioridade
 
-  if (idSenioridade) {
-    await fetch(`${API}/senioridade/${idSenioridade}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(senioridade)
-    })
-  } else {
-    await fetch(`${API}/senioridade`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(senioridade)
-    })
-  }
+  try {
+    const resposta = await fetchAutenticado(
+      idSenioridade ? `${API}/senioridade/${idSenioridade}` : `${API}/senioridade`,
+      {
+        method: idSenioridade ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(senioridade)
+      }
+    )
+    if (!resposta.ok) {
+      const erro = await resposta.json()
+      throw new Error(erro.detail || erro.erro || 'Não foi possível salvar a senioridade.')
+    }
 
-  limparFormulario()
-  listarSenioridades()
+    limparFormulario()
+    await listarSenioridades()
+  } catch (erro) {
+    alert(`Erro ao salvar senioridade: ${erro.message}`)
+  }
 })
 
 // ─── Abre os dados da senioridade no formulário para edição ───
-function preencherFormularioEdicao(senioridade) {
+function preencherFormularioEdicao(idSenioridade) {
+  const senioridade = senioridades.find(item => item.idsenioridade === Number(idSenioridade))
+  if (!senioridade) return
+
   document.getElementById('nome').value = senioridade.nome
   formSenioridade.dataset.idSenioridade = senioridade.idsenioridade
 
@@ -77,6 +87,14 @@ function preencherFormularioEdicao(senioridade) {
 async function deletarSenioridade(id) {
   if (!confirm('Tem certeza que deseja excluir esta senioridade?')) return
 
-  await fetch(`${API}/senioridade/${id}`, { method: 'DELETE' })
-  listarSenioridades()
+  try {
+    const resposta = await fetchAutenticado(`${API}/senioridade/${id}`, { method: 'DELETE' })
+    if (!resposta.ok) {
+      const erro = await resposta.json()
+      throw new Error(erro.detail || erro.erro || 'Não foi possível excluir a senioridade.')
+    }
+    await listarSenioridades()
+  } catch (erro) {
+    alert(`Erro ao excluir senioridade: ${erro.message}`)
+  }
 }
